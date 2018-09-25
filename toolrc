@@ -1,7 +1,8 @@
 # -*- mode: sh -*-
 
 function updatetool() {
-    curl --fail -o $HOME/.toolrc https://raw.githubusercontent.com/martinrhoads/toolbox/master/toolrc
+    curl --fail --silent --output\
+         $HOME/.toolrc https://raw.githubusercontent.com/martinrhoads/toolbox/master/toolrc
     echo tool updated. source $HOME/.toolrc
 }
 
