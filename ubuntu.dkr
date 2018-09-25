@@ -8,6 +8,7 @@ RUN apt-get install -y\
     telnet\
     tmux\
     zsh
+RUN apt-get clean
 
 WORKDIR /root
 
