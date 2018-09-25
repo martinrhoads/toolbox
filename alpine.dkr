@@ -10,7 +10,8 @@ WORKDIR /root
 
 ADD https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh /tmp/install.sh
 RUN sh /tmp/install.sh || true
-COPY files/zshrc .
+RUN mkdir -p .oh-my-zsh/cache/.brew-completion-message
+COPY files/zshrc .zshrc
 
 
 ENTRYPOINT /bin/zsh

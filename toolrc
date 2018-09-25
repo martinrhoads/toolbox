@@ -1,1 +1,4 @@
-FOO=something
+HOSTNAME="${HOSTNAME:-$(hostname)}"
+
+alias alpinetool="docker run -it -h $HOSTNAME --name alpinetool martinrhoads/alpinetool"
+alias ubuntutool="docker run -it -h $HOSTNAME --name ubuntutool martinrhoads/ubuntutool"
