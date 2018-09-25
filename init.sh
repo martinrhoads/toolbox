@@ -3,15 +3,15 @@
 set -o errexit
 set -o xtrace
 
-echo hi
+toolPath=$HOME/.toolrc
 
-cd $HOME
-
-if [ ! -f "$file" ]; then
-    echo 'source $HOME/.toolrc' >> .bashrc
-    echo 'source $HOME/.toolrc' >> .zshrc
+if [ -f "$toolPath" ]; then
+    echo tool already installed. \"source $toolPath\" and run \"updatetool\".
+else
+    echo installing tool...
+    curl --fail --silent --output $toolPath\
+         https://raw.githubusercontent.com/martinrhoads/toolbox/master/toolrc
+    echo "source $toolPath" >> .bashrc
+    echo "source $toolPath" >> .zshrc
+    sudo adduser martin docker
 fi
-
-curl -o .toolrc https://raw.githubusercontent.com/martinrhoads/toolbox/master/toolrc
-
-echo bye

@@ -1,4 +1,10 @@
-HOSTNAME="${HOSTNAME:-$(hostname)}"
+# -*- mode: sh -*-
 
+function updatetool() {
+    curl --fail -o $HOME/.toolrc https://raw.githubusercontent.com/martinrhoads/toolbox/master/toolrc
+    echo tool updated. source $HOME/.toolrc
+}
+
+HOSTNAME="${HOSTNAME:-$(hostname -s)}"
 alias alpinetool="docker run -it -h $HOSTNAME --name alpinetool martinrhoads/alpinetool"
 alias ubuntutool="docker run -it -h $HOSTNAME --name ubuntutool martinrhoads/ubuntutool"
