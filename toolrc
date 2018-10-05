@@ -38,3 +38,5 @@ function runcontainer() {
 
 alias alpinetool="runcontainer alpine"
 alias ubuntutool="runcontainer ubuntu"
+
+# unset -f runcontainer
