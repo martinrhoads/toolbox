@@ -10,25 +10,27 @@ function updatetool() {
 function runcontainer() {
     local hostname="${HOSTNAME:-$(hostname -s)}"
     local name=${1}tool
-    local dkrCmd="docker pull martinrhoads/$name &&\
-                    docker run\
-                      --interactive\
-                      --tty\
-                      --volume /:/host\
-                      --volume /mnt:/mnt\
-                      --hostname $hostname\
-                      --name $name\
-                      --workdir /host$(pwd)\
-                      martinrhoads/$name\
-                      > /dev/null"
+    local dkrCmd="docker run\
+                    --interactive\
+                    --tty\
+                    --volume /:/host\
+                    --volume /mnt:/mnt\
+                    --hostname $hostname\
+                    --name $name\
+                    --workdir /host$(pwd)\
+                    martinrhoads/$name\
+                    > /dev/null"
 
 
     if [ -z $1 ]; then
         echo you need to pass a container to runcontainer
         exit 1
     else
+        echo -n pulling...
         docker pull martinrhoads/$name > /dev/null
+        echo -n  removing...
         docker rm $name ||true > /dev/null
+        echo -n running...
         echo about to run: $dkrCmd
         $dkrCmd
     fi
