@@ -29,8 +29,8 @@ function runcontainer() {
     else
         docker pull martinrhoads/$name > /dev/null
         docker rm $name ||true > /dev/null
-        echo about to run: $dkrCmd
-        $dkrCmd
+        echo about to run: "$dkrCmd"
+        "$dkrCmd"
     fi
 }
 
