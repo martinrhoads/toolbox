@@ -10,17 +10,17 @@ function updatetool() {
 function runcontainer() {
     local hostname="${HOSTNAME:-$(hostname -s)}"
     local name=${1}tool
-    local dkrCmd="docker run\
-                        --pull=true\
-                        --interactive\
-                        --tty\
-                        --volume /:/host\
-                        --volume /mnt:/mnt\
-                        --hostname $hostname\
-                        --name $name\
-                        --workdir /host$(pwd)\
-                        martinrhoads/$name\
-                        > /dev/null"
+    local dkrCmd="docker pull martinrhoads/$name &&\
+                    docker run\
+                      --interactive\
+                      --tty\
+                      --volume /:/host\
+                      --volume /mnt:/mnt\
+                      --hostname $hostname\
+                      --name $name\
+                      --workdir /host$(pwd)\
+                      martinrhoads/$name\
+                      > /dev/null"
 
 
     if [ -z $1 ]; then
