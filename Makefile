@@ -3,7 +3,8 @@ build: init ubuntu alpine
 all: push-git build push-images
 
 init:
-	cp ${HOME}/.zshrc files/zshrc
+	cp ${HOME}/.tmux.conf files/tmux.conf
+	cp ${HOME}/.zshrc     files/zshrc
 	rsync -a --delete ${HOME}/.oh-my-zsh/ files/oh-my-zsh/
 
 build_opts = docker build --pull . -t
