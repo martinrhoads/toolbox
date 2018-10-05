@@ -3,9 +3,35 @@
 function updatetool() {
     curl --fail --silent --output\
          $HOME/.toolrc https://raw.githubusercontent.com/martinrhoads/toolbox/master/toolrc
-    echo tool updated. source $HOME/.toolrc
+    source $HOME/.toolrc
+    echo tool updated.
 }
 
-HOSTNAME="${HOSTNAME:-$(hostname -s)}"
-alias alpinetool="docker run -it -h $HOSTNAME --name alpinetool martinrhoads/alpinetool"
-alias ubuntutool="docker run -it -h $HOSTNAME --name ubuntutool martinrhoads/ubuntutool"
+function runcontainer() {
+    local hostname="${HOSTNAME:-$(hostname -s)}"
+    local name=${1}tool
+    local dkrCmd="docker run\
+                        --interactive\
+                        --tty\
+                        --volume /:/host\
+                        --volume /mnt:/mnt\
+                        --hostname $hostname\
+                        --name $name\
+                        --workdir /host$(pwd)\
+                        martinrhoads/$name\
+                        > /dev/null"
+
+
+    if [ -z $1 ]; then
+        echo you need to pass a container to runcontainer
+        exit 1
+    else
+        docker pull martinrhoads/$name > /dev/null
+        docker rm $name ||true > /dev/null
+        echo about to run: $dkrCmd
+        $dkrCmd
+    fi
+}
+
+alias alpinetool="runcontainer alpine"
+alias ubuntutool="runcontainer ubuntu"
