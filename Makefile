@@ -1,6 +1,6 @@
 build: init ubuntu alpine
 
-all: build push
+all: push-git build push-images
 
 init:
 	cp ${HOME}/.zshrc files/zshrc
@@ -12,7 +12,10 @@ ubuntu:
 alpine:
 	docker build --pull --squash . -t martinrhoads/alpinetool -f alpine.dkr
 
-push: push-ubuntu push-alpine
+push-git:
+	git push origin master
+
+push-images: push-ubuntu push-alpine
 
 push-ubuntu:
 	docker push martinrhoads/ubuntutool
