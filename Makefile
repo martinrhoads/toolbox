@@ -7,11 +7,12 @@ init:
 	cp ${HOME}/.zshrc     files/zshrc
 	rsync -a --delete ${HOME}/.oh-my-zsh/ files/oh-my-zsh/
 
-build_opts = docker build --pull . -t
 ubuntu:
-	$(build_opts) martinrhoads/ubuntutool -f ubuntu.dkr
+	docker build --pull . -t martinrhoads/ubuntubase -f ubuntu.dkr
+	docker build --build-arg BASE_IMAGE=martinrhoads/ubuntubase . -t martinrhoads/ubuntutool -f tool.dkr
 alpine:
-	$(build_opts) martinrhoads/alpinetool -f alpine.dkr
+	docker build --pull . -t martinrhoads/alpinebase -f alpine.dkr
+	docker build --build-arg BASE_IMAGE=martinrhoads/alpinebase . -t martinrhoads/alpinetool -f tool.dkr
 
 push-git:
 	git push origin master
